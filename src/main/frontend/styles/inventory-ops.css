@@ -1,0 +1,20 @@
+/* Ombor bo'limlari jadvali (products.css dagi pl-/pf- stillariga qo'shimcha) */
+.ol-wrap { overflow-x: auto; background: #fff; border: 1px solid #e2dccb; border-radius: 14px;
+  box-shadow: 0 1px 0 rgba(21,23,27,.04), 0 10px 24px -18px rgba(21,23,27,.3); }
+.ol-row { display: grid; align-items: center; gap: 16px; min-width: 680px; padding: 14px 20px;
+  border-top: 1px solid #eee9da; }
+.ol-row:first-child { border-top: 0; }
+.ol-row:hover:not(.ol-head) { background: #fbf9f2; }
+.ol-head { background: #faf7ee; padding-top: 11px; padding-bottom: 11px; font-size: .74rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; color: #5a5f67; }
+.ol-cell { font-size: .93rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ol-cell.is-main { font-weight: 600; }
+.ol-cell.is-num, .ol-head .is-num { text-align: right; font-variant-numeric: tabular-nums; }
+
+.ol-badge { display: inline-flex; padding: 4px 10px; border-radius: 999px; font-size: .8rem; font-weight: 600; }
+.ol-badge.is-ok { background: #e7f2ec; color: #2b7a57; }
+.ol-badge.is-low { background: #fbf0d3; color: #8a5d00; }
+.ol-badge.is-zero { background: #fbeeea; color: #b3452f; }
+
+.ol-picker { display: flex; flex-direction: column; }
+.ol-hint { margin: -4px 0 2px; font-size: .86rem; color: #5a5f67; }

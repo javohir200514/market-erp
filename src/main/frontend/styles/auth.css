@@ -1,0 +1,731 @@
+/* =====================================================================
+   DOKONIX — kirish va ro'yxatdan o'tish sahifalari (LoginView + RegisterView)
+   Qora mavzu, mobilga moslashgan.
+   Joylashuvi: frontend/styles/auth.css  (eski auth.css o'rniga qo'ying)
+   ===================================================================== */
+
+.au-page {
+  --au-bg: #050608;
+  --au-card: #0b0e13;
+  --au-card-2: #10141a;
+  --au-line: rgba(255, 255, 255, 0.08);
+  --au-line-2: rgba(255, 255, 255, 0.14);
+  --au-text: #f5f7fa;
+  --au-muted: #8b919c;
+  --au-blue: #0a9bff;
+  --au-teal: #06b6c4;
+  --au-good: #22c55e;
+  --au-danger: #ff5d6c;
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: calc(100vh - 68px);
+  padding: 48px 20px;
+  background: var(--au-bg);
+  color: var(--au-text);
+  color-scheme: dark;            /* Vaadin va brauzer elementlari qora mavzuda chizilsin */
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.au-page *, .au-page *::before, .au-page *::after { box-sizing: border-box; }
+.au-page h1, .au-page h3, .au-page p { margin: 0; }
+
+/* orqa fon: ko'k nur + panjara */
+.au-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(55% 50% at 50% 0%, rgba(10, 155, 255, 0.18), transparent 70%),
+    radial-gradient(35% 35% at 90% 90%, rgba(6, 182, 196, 0.1), transparent 70%),
+    linear-gradient(var(--au-line) 1px, transparent 1px) 0 0 / 56px 56px,
+    linear-gradient(90deg, var(--au-line) 1px, transparent 1px) 0 0 / 56px 56px;
+  -webkit-mask-image: radial-gradient(75% 85% at 50% 30%, #000 30%, transparent 100%);
+  mask-image: radial-gradient(75% 85% at 50% 30%, #000 30%, transparent 100%);
+}
+
+.au-login {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 440px;
+}
+
+/* ----------------------------------------------------------- karta (login + register) */
+.au-card,
+.rg-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  padding: 40px 36px 32px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(16, 20, 26, 0.92), rgba(11, 14, 19, 0.96));
+  border: 1px solid var(--au-line-2);
+  border-radius: 24px;
+  box-shadow:
+    0 40px 90px -30px rgba(0, 0, 0, 0.95),
+    0 0 0 1px rgba(10, 155, 255, 0.05),
+    0 -1px 0 0 rgba(10, 155, 255, 0.25) inset;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* logotip (DOKON + IX) — o'rtada */
+.au-brand { display: flex; align-items: center; justify-content: center; width: 100%; }
+.au-brand .site-nav-logo {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-decoration: none;
+  color: var(--au-text);
+}
+.au-brand .brand-name-main { color: #fff; }
+.au-brand .brand-name-accent {
+  background: linear-gradient(135deg, var(--au-blue), var(--au-teal));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ----------------------------------------------------------- login: sarlavha va forma */
+.au-header { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; text-align: center; }
+.au-title {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  text-align: center;
+  color: #fff;
+}
+.au-subtitle {
+  max-width: 320px;
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--au-muted);
+}
+.au-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 18px;
+  width: 100%;
+}
+
+/* ----------------------------------------------------------- maydonlar (umumiy) */
+.au-field {
+  width: 100%;
+  text-align: left;
+  color-scheme: dark;
+
+  /* Lumo (Vaadin 24) */
+  --lumo-body-text-color: #f5f7fa;
+  --lumo-header-text-color: #f5f7fa;
+  --lumo-secondary-text-color: #c5ccd6;
+  --lumo-tertiary-text-color: #8b919c;
+  --lumo-disabled-text-color: #6b717c;
+  --lumo-primary-color: #0a9bff;
+  --lumo-primary-text-color: #0a9bff;
+  --lumo-error-color: #ff5d6c;
+  --lumo-error-text-color: #ff5d6c;
+  --lumo-contrast-10pct: rgba(255, 255, 255, 0.05);
+  --lumo-contrast-20pct: rgba(255, 255, 255, 0.12);
+  --lumo-contrast-5pct: rgba(255, 255, 255, 0.03);
+  --lumo-contrast-30pct: rgba(255, 255, 255, 0.2);
+  --lumo-contrast-40pct: rgba(255, 255, 255, 0.28);
+  --lumo-contrast-50pct: rgba(255, 255, 255, 0.36);
+  --lumo-contrast-60pct: rgba(255, 255, 255, 0.55);
+  --lumo-contrast-70pct: rgba(255, 255, 255, 0.7);
+  --lumo-contrast-80pct: rgba(255, 255, 255, 0.82);
+  --lumo-contrast-90pct: rgba(255, 255, 255, 0.92);
+  --lumo-contrast: #fff;
+  --lumo-base-color: #0b0e13;
+
+  /* Vaadin 25 */
+  --vaadin-input-field-background: #080a0e;
+  --vaadin-input-field-border-color: rgba(255, 255, 255, 0.14);
+  --vaadin-input-field-border-width: 1px;
+  --vaadin-input-field-value-color: #f5f7fa;
+  --vaadin-input-field-label-color: #c5ccd6;
+  --vaadin-input-field-placeholder-color: #6b717c;
+  --vaadin-input-field-helper-color: #8b919c;
+  --vaadin-input-field-height: 48px;
+  --vaadin-input-field-border-radius: 12px;
+}
+
+/* nom (label): maydon OSTIDA, chapga tekis */
+.au-field::part(label) {
+  order: 2;
+  width: 100%;
+  margin: 8px 0 0;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: #c5ccd6;
+}
+.au-field::part(input-field) { order: 1; }
+.au-field::part(helper-text) {
+  order: 3;
+  width: 100%;
+  margin-top: 4px;
+  text-align: left;
+  font-size: 12.5px;
+  color: var(--au-muted);
+}
+.au-field::part(error-message) {
+  order: 4;
+  width: 100%;
+  margin-top: 4px;
+  text-align: left;
+  font-size: 12.5px;
+  color: var(--au-danger);
+}
+.au-field label { color: #c5ccd6 !important; text-align: left; }
+
+.au-field::part(input-field) {
+  min-height: 48px;
+  border-radius: 12px;
+  background: #080a0e;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+  transition: box-shadow 0.2s ease, background 0.2s ease;
+}
+.au-field:hover::part(input-field) { box-shadow: inset 0 0 0 1px rgba(10, 155, 255, 0.5); }
+.au-field[focused]::part(input-field),
+.au-field[focus-ring]::part(input-field) {
+  background: #0a0d12;
+  box-shadow: inset 0 0 0 1px var(--au-blue), 0 0 0 4px rgba(10, 155, 255, 0.16);
+}
+.au-field[invalid]::part(input-field) { box-shadow: inset 0 0 0 1px var(--au-danger); }
+
+/* yozilgan matn — har doim yorqin (oldin qora bo'lib ko'rinmay qolgan edi) */
+.au-field input,
+.au-field input[type="password"],
+.au-field input[type="email"] {
+  color: #f5f7fa !important;
+  -webkit-text-fill-color: #f5f7fa !important;
+  caret-color: var(--au-blue);
+  text-align: left;
+  background: transparent;
+}
+.au-field input::placeholder {
+  color: #6b717c !important;
+  -webkit-text-fill-color: #6b717c !important;
+  opacity: 1;
+}
+.au-field input::selection { background: rgba(10, 155, 255, 0.4); color: #fff; }
+
+/* brauzer avto-to'ldirishi (autofill): fon ham, matn ham qora mavzuda */
+.au-field input:-webkit-autofill,
+.au-field input:-webkit-autofill:hover,
+.au-field input:-webkit-autofill:focus,
+.au-field input:-webkit-autofill:active {
+  -webkit-text-fill-color: #f5f7fa !important;
+  caret-color: #f5f7fa;
+  -webkit-box-shadow: 0 0 0 1000px #080a0e inset !important;
+  box-shadow: 0 0 0 1000px #080a0e inset !important;
+  transition: background-color 9999s ease-out 0s;
+}
+.au-field input:autofill,
+.au-field input:autofill:hover,
+.au-field input:autofill:focus,
+.au-field input:autofill:active {
+  -webkit-text-fill-color: #f5f7fa !important;
+  box-shadow: 0 0 0 1000px #080a0e inset !important;
+}
+
+/* sichqoncha ustiga borganda maydon oqarib ketmasin:
+   Vaadin'ning hover "yorug'lik" qatlami o'chirilgan, hover faqat ko'k chegara beradi */
+.au-field::part(input-field)::after,
+.au-field:hover::part(input-field)::after,
+.au-field[focused]::part(input-field)::after {
+  display: none !important;
+  opacity: 0 !important;
+  background: transparent !important;
+}
+.au-field:hover::part(input-field) { background: #080a0e; }
+.au-field[focused]:hover::part(input-field) { background: #0a0d12; }
+.au-field:hover input,
+.au-field:hover input:-webkit-autofill {
+  color: #f5f7fa !important;
+  -webkit-text-fill-color: #f5f7fa !important;
+  background: transparent;
+}
+
+/* ---------------------------------------------------------------------
+   AVTOTO'LDIRISH (autofill) — qora matn muammosi
+
+   Chrome avtoto'ldirilgan maydonga o'zining stilini beradi:
+   color: light-dark(black, white) !important  (brauzerning o'z qoidasi).
+   Maydon "light" rejimda hisoblansa, matn qora chiqadi. Shuning uchun:
+   1) sahifa va maydonning o'zi majburan "dark" rejimga o'tkaziladi;
+   2) matn rangi alohida (-webkit-text-fill-color) ham berildi, u brauzer
+      qoidasidan ustun turadi;
+   3) fon "inset" soya bilan to'q rangda yopiladi.
+   --------------------------------------------------------------------- */
+:root:has(.au-page) { color-scheme: dark; }
+
+.au-field input,
+.au-field input:-webkit-autofill,
+.au-field input:-webkit-autofill:hover,
+.au-field input:-webkit-autofill:focus,
+.au-field input:-webkit-autofill:active {
+  color-scheme: dark !important;
+}
+
+.au-field input:-webkit-autofill,
+.au-field input:-webkit-autofill:hover,
+.au-field input:-webkit-autofill:focus,
+.au-field input:-webkit-autofill:active,
+.au-field input:-webkit-autofill:focus-visible {
+  color: #f5f7fa !important;
+  -webkit-text-fill-color: #f5f7fa !important;
+  caret-color: #f5f7fa !important;
+  -webkit-box-shadow: 0 0 0 1000px #080a0e inset !important;
+  box-shadow: 0 0 0 1000px #080a0e inset !important;
+  border-radius: 12px;
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+.au-field input:-webkit-autofill::first-line { color: #f5f7fa !important; }
+.au-field input:autofill {
+  color: #f5f7fa !important;
+  -webkit-text-fill-color: #f5f7fa !important;
+}
+
+/* ko'zcha (parolni ko'rsatish) va boshqa tugmalar */
+.au-field vaadin-password-field-button,
+.au-field [slot="reveal"],
+.au-field [slot="clear-button"],
+.au-field::part(reveal-button),
+.au-field::part(clear-button) {
+  color: #aab1bc;
+  --lumo-contrast-60pct: rgba(255, 255, 255, 0.6);
+}
+.au-field vaadin-password-field-button:hover,
+.au-field [slot="reveal"]:hover { color: #fff; }
+
+.au-input-icon { width: 18px; height: 18px; margin-right: 4px; color: var(--au-muted); }
+.au-field[focused] .au-input-icon { color: var(--au-blue); }
+
+/* ----------------------------------------------------------- checkbox */
+.au-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 22px;
+  width: 100%;
+  text-align: center;
+}
+.au-check {
+  color: #c5ccd6;
+  color-scheme: dark;
+  font-size: 14px;
+  --lumo-body-text-color: #c5ccd6;
+  --lumo-primary-color: #0a9bff;
+  --lumo-primary-contrast-color: #fff;
+  --lumo-error-color: #ff5d6c;
+  --lumo-error-text-color: #ff5d6c;
+  --lumo-contrast-20pct: rgba(255, 255, 255, 0.14);
+  --lumo-contrast-10pct: #080a0e;
+  --vaadin-checkbox-label-color: #c5ccd6;
+  --vaadin-checkbox-background: #080a0e;
+  --vaadin-checkbox-border-color: rgba(255, 255, 255, 0.25);
+}
+.au-check label { color: #c5ccd6 !important; font-size: 14px; }
+.au-check::part(checkbox) {
+  background: #080a0e;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+.au-check[checked]::part(checkbox) { background: var(--au-blue); box-shadow: none; }
+.au-check[invalid]::part(checkbox) { box-shadow: inset 0 0 0 1px var(--au-danger); }
+.au-check::part(error-message) { text-align: center; color: var(--au-danger); }
+
+.au-forgot {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--au-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.au-forgot:hover { color: var(--au-blue); }
+
+.au-error {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 93, 108, 0.35);
+  background: rgba(255, 93, 108, 0.1);
+  color: #ff8a95;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* login tugmasi */
+.au-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+  margin: 4px 0 0;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--au-blue);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 10px 28px -10px rgba(10, 155, 255, 0.75);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.25s ease;
+}
+.au-submit:hover { background: #2aa9ff; transform: translateY(-1px); box-shadow: 0 14px 34px -10px rgba(10, 155, 255, 0.9); }
+.au-submit:active { transform: translateY(0); }
+.au-submit[disabled] { opacity: 0.6; cursor: default; transform: none; box-shadow: none; }
+
+.au-prompt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding-top: 20px;
+  border-top: 1px solid var(--au-line);
+  font-size: 14.5px;
+  text-align: center;
+  color: var(--au-muted);
+}
+.au-link { font-weight: 700; color: var(--au-blue); text-decoration: none; transition: color 0.2s ease; }
+.au-link:hover { color: #52bcff; text-decoration: underline; }
+
+/* =====================================================================
+   RO'YXATDAN O'TISH (rg-*)
+   ===================================================================== */
+
+.rg-page { align-items: flex-start; }
+.rg-main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 560px;
+  margin: auto;            /* qisqa qadamda vertikal o'rtada, uzun bo'lsa tepadan boshlanadi */
+}
+.rg-card { gap: 26px; padding: 36px 36px 32px; }
+.rg-card.is-wide { max-width: 980px; }
+.rg-main:has(.rg-card.is-wide) { max-width: 980px; }
+
+.rg-brand-wrap { margin-bottom: -4px; }
+.rg-step-container { display: flex; flex-direction: column; align-items: center; gap: 22px; width: 100%; text-align: center; }
+
+.rg-title {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  text-align: center;
+  color: #fff;
+}
+.rg-sub {
+  max-width: 460px;
+  margin-top: -10px;
+  font-size: 15px;
+  line-height: 1.55;
+  text-align: center;
+  color: var(--au-muted);
+}
+
+/* ----------------------------------------------------------- qadamlar chizig'i */
+.rg-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 520px;
+}
+.rg-step { display: flex; flex-direction: column; align-items: center; gap: 8px; flex-shrink: 0; min-width: 64px; }
+.rg-step-dot {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--au-line-2);
+  background: #080a0e;
+  color: var(--au-muted);
+  font-size: 13px;
+  font-weight: 700;
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+.rg-step-label { font-size: 12px; font-weight: 600; color: var(--au-muted); white-space: nowrap; }
+.rg-step.is-current .rg-step-dot {
+  border-color: var(--au-blue);
+  background: rgba(10, 155, 255, 0.14);
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(10, 155, 255, 0.16);
+}
+.rg-step.is-current .rg-step-label { color: #fff; }
+.rg-step.is-done .rg-step-dot { border-color: transparent; background: var(--au-blue); color: #fff; }
+.rg-step.is-done .rg-step-dot::after {
+  content: "";
+  width: 6px; height: 11px;
+  margin-top: -2px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(45deg);
+}
+.rg-step.is-done .rg-step-label { color: #c5ccd6; }
+.rg-step-line {
+  flex: 1;
+  min-width: 16px;
+  height: 2px;
+  margin: 0 4px 22px;
+  border-radius: 2px;
+  background: var(--au-line-2);
+  transition: background 0.3s ease;
+}
+.rg-step-line.is-done { background: linear-gradient(90deg, var(--au-blue), var(--au-teal)); }
+
+/* ----------------------------------------------------------- forma bo'limlari */
+.rg-section { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; }
+.rg-section-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--au-blue);
+}
+.rg-section-title::before,
+.rg-section-title::after { content: ""; flex: 1; height: 1px; background: var(--au-line); }
+
+.rg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; text-align: left; }
+.rg-grid .rg-span-2 { grid-column: 1 / -1; }
+
+.rg-terms { display: flex; justify-content: center; width: 100%; text-align: center; }
+
+/* ----------------------------------------------------------- tugmalar (o'rtada) */
+.rg-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+.rg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 240px;
+  height: 50px;
+  padding: 0 28px;
+  border: 0;
+  border-radius: 12px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.25s ease, opacity 0.2s ease;
+}
+.rg-btn svg { width: 18px; height: 18px; transition: transform 0.2s ease; }
+.rg-btn:hover svg { transform: translateX(3px); }
+.rg-btn-primary {
+  background: var(--au-blue);
+  color: #fff;
+  box-shadow: 0 10px 28px -10px rgba(10, 155, 255, 0.75);
+}
+.rg-btn-primary:hover:not([disabled]) { background: #2aa9ff; transform: translateY(-1px); box-shadow: 0 14px 34px -10px rgba(10, 155, 255, 0.9); }
+.rg-btn-primary[disabled] { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
+
+.rg-link {
+  padding: 6px 10px;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--au-blue);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.rg-link:hover { color: #52bcff; text-decoration: underline; }
+
+.rg-err { width: 100%; text-align: center; font-size: 14px; font-weight: 500; color: #ff8a95; }
+
+/* ----------------------------------------------------------- kod kiritish */
+.rg-code-wrap { width: 100%; max-width: 280px; }
+.rg-code input {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.5em;
+  text-indent: 0.5em;
+  font-variant-numeric: tabular-nums;
+}
+.rg-hint { max-width: 380px; margin-top: -6px; font-size: 13.5px; line-height: 1.5; text-align: center; color: var(--au-muted); }
+
+/* ----------------------------------------------------------- modul / tur kartalari */
+.rg-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--au-line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+}
+.rg-toolbar-left { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.rg-counter { font-size: 14px; font-weight: 600; color: #d7dce4; }
+.rg-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #4ade80;
+  font-size: 12px;
+  font-weight: 600;
+}
+.rg-verified::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--au-good); }
+
+.rg-modules {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+.rg-mod {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 20px 22px;
+  text-align: center;
+  border: 1px solid var(--au-line);
+  border-radius: 18px;
+  background: var(--au-card);
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.25s ease;
+}
+.rg-mod:hover { border-color: rgba(10, 155, 255, 0.45); transform: translateY(-2px); }
+.rg-mod:focus-visible { border-color: var(--au-blue); box-shadow: 0 0 0 4px rgba(10, 155, 255, 0.18); }
+.rg-mod.is-selected {
+  border-color: var(--au-blue);
+  background:
+    radial-gradient(80% 70% at 50% 0%, rgba(10, 155, 255, 0.16), transparent 70%),
+    var(--au-card);
+  box-shadow: 0 20px 40px -26px rgba(10, 155, 255, 0.7);
+}
+.rg-mod-top { display: flex; align-items: center; justify-content: center; width: 100%; margin-bottom: 4px; }
+.rg-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(10, 155, 255, 0.18), rgba(6, 182, 196, 0.1));
+  border: 1px solid rgba(10, 155, 255, 0.28);
+  color: var(--au-blue);
+}
+.rg-icon svg { width: 24px; height: 24px; }
+
+.rg-mod-check {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--au-line-2);
+  background: #080a0e;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.rg-mod.is-selected .rg-mod-check { background: var(--au-blue); border-color: var(--au-blue); }
+.rg-mod.is-selected .rg-mod-check::after {
+  content: "";
+  position: absolute;
+  left: 7px; top: 3px;
+  width: 5px; height: 10px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(45deg);
+}
+.rg-mod h3 { font-size: 17px; font-weight: 700; color: #fff; }
+.rg-mod p { font-size: 14px; line-height: 1.5; color: var(--au-muted); }
+.rg-mod-feats {
+  margin-top: auto;
+  padding-top: 12px;
+  width: 100%;
+  border-top: 1px solid var(--au-line);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #aab1bc;
+}
+
+/* ----------------------------------------------------------- planshet / telefon */
+@media (max-width: 860px) {
+  .au-page { min-height: calc(100vh - 58px); padding: 32px 16px; }
+  .au-page:not(.rg-page) { align-items: flex-start; }
+  .au-login { margin-top: 4vh; }
+}
+
+@media (max-width: 640px) {
+  .rg-card { padding: 28px 18px 24px; gap: 22px; border-radius: 20px; }
+  .rg-grid { grid-template-columns: 1fr; }
+  .rg-title { font-size: 24px; }
+  .rg-modules { grid-template-columns: 1fr; gap: 12px; }
+  .rg-btn { width: 100%; min-width: 0; }
+  .rg-toolbar { justify-content: center; text-align: center; }
+  .rg-toolbar-left { justify-content: center; }
+  /* qadamlarda faqat joriy qadam nomi ko'rinadi */
+  .rg-step { min-width: 0; position: relative; }
+  .rg-step-label { display: none; }
+  .rg-step.is-current .rg-step-label { display: block; position: absolute; transform: translateY(40px); }
+  .rg-steps { margin-bottom: 20px; }
+  .rg-step-line { margin-bottom: 0; }
+}
+
+@media (max-width: 480px) {
+  .au-page { padding: 24px 12px 40px; }
+  .au-login { margin-top: 0; max-width: 100%; }
+  .au-card { gap: 20px; padding: 30px 20px 24px; border-radius: 20px; }
+  .au-brand .site-nav-logo { font-size: 28px; }
+  .au-title { font-size: 24px; }
+  .au-subtitle { font-size: 14px; }
+  .au-form { gap: 16px; }
+  .au-submit { height: 48px; font-size: 15.5px; }
+  .rg-code input { font-size: 22px; letter-spacing: 0.4em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-page *, .au-page *::before, .au-page *::after { transition: none !important; }
+}

@@ -1,0 +1,71 @@
+/* BI dashboard. dashboard.css (dx-*) bilan birga ishlaydi.
+   Joylashuvi: frontend/styles/bi.css */
+.bi { --bi-c0: #2f6fed; --bi-c1: #e8a33d; --bi-c2: #1f9d6b; --bi-c3: #8b5cf6; --bi-c4: #e5534b; --bi-c5: #8892a6; }
+
+.bi-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+.bi-custom { display: flex; gap: 8px; }
+.bi-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; }
+.bi-tools { display: flex; gap: 8px; }
+.bi-btn { text-decoration: none; cursor: pointer; }
+
+.bi-ins { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.bi-ins-item { padding: 7px 12px; border-radius: 999px; background: #eef3ff; color: #1d3f94; font-size: 13px; }
+
+.bi-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.bi-deltas { display: flex; flex-direction: column; gap: 2px; }
+
+.bi-xlabels { display: flex; justify-content: space-between; font-size: 11px; color: #6b7280; padding-top: 6px; }
+.bi-bar.bi-c0 { fill: var(--bi-c0); } .bi-bar.bi-c1 { fill: var(--bi-c1); }
+.bi-line { stroke: var(--bi-c2); stroke-width: 2.4; }
+
+.bi-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; font-size: 12px; }
+.bi-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+.bi-dot { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+.bi-s0 { background: var(--bi-c0); stroke: var(--bi-c0); } .bi-s1 { background: var(--bi-c1); stroke: var(--bi-c1); }
+.bi-s2 { background: var(--bi-c2); stroke: var(--bi-c2); } .bi-s3 { background: var(--bi-c3); stroke: var(--bi-c3); }
+.bi-s4 { background: var(--bi-c4); stroke: var(--bi-c4); } .bi-s5 { background: var(--bi-c5); stroke: var(--bi-c5); }
+.bi-ring { background: none; }
+
+.bi-wf { display: flex; flex-direction: column; }
+.bi-wf-row { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid #eef0f4; font-size: 14px; }
+.bi-wf-row .is-minus { color: #c2410c; }
+.bi-wf-row.is-total { font-weight: 600; }
+.bi-wf-row.is-net { font-weight: 700; font-size: 16px; border-bottom: 0; border-top: 2px solid #1b2433; margin-top: 4px; }
+
+.bi-donut-block { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.bi-donut-wrap { width: 130px; height: 130px; flex: none; }
+.bi-donut { width: 100%; height: 100%; }
+.bi-legend-col { display: flex; flex-direction: column; gap: 6px; min-width: 0; flex: 1; }
+
+.bi-funnel { display: flex; flex-direction: column; gap: 6px; }
+.bi-funnel-bar { padding: 8px 10px; border-radius: 8px; color: #fff; font-size: 13px; white-space: nowrap; overflow: hidden; }
+.bi-funnel-bar.bi-c0 { background: var(--bi-c0); } .bi-funnel-bar.bi-c1 { background: var(--bi-c3); }
+.bi-funnel-bar.bi-c2 { background: var(--bi-c2); } .bi-funnel-bar.bi-c3 { background: var(--bi-c4); }
+
+.dx-bar-track .is-bad { background: var(--bi-c4); }
+.dx-bar-track .is-warn { background: var(--bi-c1); }
+.dx-bar-track .is-ok { background: var(--bi-c2); }
+
+@media (max-width: 1100px) { .bi-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .bi-kpis { grid-template-columns: 1fr; } .bi-custom { flex-direction: column; } }
+@media print { .bi-tools, .dx-seg, .bi-custom { display: none !important; } }
+
+/* ---- Savdo tahlili ---- */
+.bi-prev { stroke: #9aa3b2; stroke-dasharray: 5 4; fill: none; stroke-width: 1.6; }
+.bi-cols { display: flex; align-items: stretch; gap: 4px; height: 170px; }
+.bi-col { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 10px; color: #6b7280; }
+.bi-col-wrap { flex: 1; width: 100%; display: flex; align-items: flex-end; }
+.bi-col-bar { width: 100%; background: var(--bi-c0); border-radius: 4px 4px 0 0; opacity: .55; }
+.bi-col.is-top .bi-col-bar { background: var(--bi-c2); opacity: 1; }
+
+/* ---- Moliyaviy tahlil ---- */
+.bi-bar.bi-c2 { fill: var(--bi-c2); }
+.bi-line.bi-c3 { stroke: var(--bi-c3); }
+.bi-pl { display: flex; flex-direction: column; }
+.bi-pl-row { display: grid; grid-template-columns: 1.5fr 1fr 1fr .7fr; gap: 8px; padding: 7px 0; border-bottom: 1px solid #eef0f4; font-size: 13px; align-items: center; }
+.bi-pl-row span:nth-child(n+2) { text-align: right; font-variant-numeric: tabular-nums; }
+.bi-pl-row.is-head { font-size: 11px; color: #6b7280; }
+.bi-pl-row.is-total { font-weight: 600; }
+.bi-pl-row.is-net { font-weight: 700; border-top: 2px solid #1b2433; border-bottom: 0; }
+.bi-pl-row .is-up { color: #15803d; } .bi-pl-row .is-down { color: #c2410c; }
+@media (max-width: 560px) { .bi-pl-row { grid-template-columns: 1.4fr 1fr 1fr; } .bi-pl-row span:nth-child(4) { display: none; } }

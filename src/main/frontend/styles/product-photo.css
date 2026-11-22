@@ -1,0 +1,49 @@
+/* Mahsulot rasmi: bosh harf (rasm yo'q yoki yuklanmasa) va kamera/rasm tanlash tugmalari.
+   Joylashuvi: frontend/styles/product-photo.css */
+
+/* Rasm yo'q bo'lsa: nomning bosh harfi, rang nomdan olinadi (--pt-h) */
+.pt {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  min-width: 44px;
+  min-height: 44px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: inherit;
+  background: hsl(var(--pt-h, 220) 70% 93%);
+  color: hsl(var(--pt-h, 220) 55% 32%);
+}
+.pt-letter { font-weight: 700; font-size: 1.4rem; line-height: 1; user-select: none; }
+.pf-photo .pt-letter { font-size: 2.6rem; }
+.pt-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #fff; /* shaffof rasm qora ko'rinmasin */
+}
+
+/* Rasm qayta ishlanayotganda */
+.pf-photo.is-busy { opacity: .55; }
+
+/* Yashirin fayl maydoni (label orqali ochiladi) */
+.pf-file-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.pf-photo-controls { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; min-width: 0; }
+.pf-photo-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.pf-pick { position: relative; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.pf-pick-ico { display: inline-flex; }
+.pf-photo-msg { color: #c2410c; font-size: 12px; line-height: 1.35; }

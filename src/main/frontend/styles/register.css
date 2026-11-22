@@ -1,0 +1,64 @@
+/* ==========================================================================
+   Uz-mark ERP — ro'yxatdan o'tish sahifasi (qo'shimcha stillar)
+   Joylashuvi: frontend/styles/register.css
+   Asosiy stillar login.css da; bu yerda faqat registratsiyaga xos qismlar.
+   ========================================================================== */
+
+/* Karta login kartasidan biroz kengroq */
+.login-page .register-card {
+  width: min(480px, calc(100% - 32px));
+}
+
+/* Sarlavha: login.css dagi 118px bu sahifada ham joyida qoladi */
+.login-page .register-card .login-header {
+  min-height: 118px;
+}
+
+/* ------------------------------------------------------------------ maydon xabarlari */
+
+.login-field::part(helper-text) {
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.login-field::part(error-message) {
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--danger-ink);
+}
+
+/* Xato holati */
+.login-field[invalid]::part(input-field) {
+  box-shadow: inset 0 0 0 1px var(--danger-line);
+}
+
+.login-field[invalid][focused]::part(input-field),
+.login-field[invalid][focus-ring]::part(input-field) {
+  box-shadow: inset 0 0 0 1px var(--danger-line), 0 0 0 3px rgba(242, 107, 107, 0.2);
+}
+
+/* ------------------------------------------------------------------ shartlar */
+
+.login-options.register-terms-row {
+  justify-content: flex-start;
+  margin-top: 4px;
+}
+
+.register-terms {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* ------------------------------------------------------------------ moslashuvchanlik */
+
+@media (max-width: 560px) {
+  .login-page .register-card {
+    width: calc(100% - 24px);
+  }
+  .login-options.register-terms-row {
+    justify-content: center;
+  }
+}

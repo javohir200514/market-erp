@@ -1,0 +1,553 @@
+/* ==========================================================================
+   Uz-mark ERP — login sahifasi, "Tungi rejim"
+   Joylashuvi: frontend/styles/login.css
+   Rangni o'zgartirish uchun faqat pastdagi .login-page o'zgaruvchilarini tahrirlang.
+   ========================================================================== */
+
+/* Sahifa o'zi skroll bo'lmasligi uchun (o'ng tarafdagi skroll yo'qoladi) */
+html:has(.login-page),
+body:has(.login-page) {
+  margin: 0;
+  overflow: hidden;
+  background: #0e131a;
+}
+
+.login-page {
+  --bg: #0e131a;
+  --card: #151b24;
+  --card-line: #263041;
+  --input-line: #2c3748;
+  --ring: #1c2531;
+  --amber: #f0b04a;
+  --amber-soft: #ffd28a;
+  --amber-ink: #1a1405;
+  --text: #e8edf4;
+  --text-strong: #f4f7fb;
+  --label: #c4cdda;
+  --muted: #aab5c5;
+  --icon: #8794a8;
+  --danger-bg: #2a1618;
+  --danger-line: #f26b6b;
+  --danger-ink: #ffb8b8;
+
+  /* Butun ekranni egallaydi; kontent sig'masa ichkarida skroll bo'ladi, lekin skroll chizig'i ko'rinmaydi */
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;       /* eski Edge */
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  color-scheme: dark;
+}
+
+.login-page::-webkit-scrollbar {  /* Chrome, Safari, Edge */
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.login-page *,
+.login-page *::before,
+.login-page *::after {
+  box-sizing: border-box;
+}
+
+/* ------------------------------------------------------------------ fon halqalari */
+
+.login-ring {
+  position: fixed;
+  border: 1px solid var(--ring);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.login-ring-a { left: -220px; bottom: -300px; width: 640px; height: 640px; }
+.login-ring-b { left: -120px; bottom: -200px; width: 440px; height: 440px; }
+.login-ring-c { right: -240px; top: -300px; width: 680px; height: 680px; }
+.login-ring-d { right: -140px; top: -200px; width: 480px; height: 480px; }
+
+/* ------------------------------------------------------------------ yuqori panel */
+
+.login-topbar {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 44px 56px 32px;   /* 0 o'rniga 32px — karta bilan oraliq */
+}
+
+.login-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.login-logo-mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--amber);
+  color: var(--amber-ink);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.login-logo-text {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+/* Til tugmalari. Qalinlik hammasida bir xil, shuning uchun faol tugma kengaymaydi. */
+.login-langs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.login-page .login-lang-btn {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 !important;
+  min-width: 0 !important;
+  height: 34px !important;
+  padding: 0 14px !important;
+  border: none !important;
+  border-radius: 17px !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: inset 0 0 0 1px var(--input-line) !important;
+  color: #b4bfce !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+}
+
+.login-page .login-lang-btn:hover {
+  color: var(--text-strong) !important;
+  box-shadow: inset 0 0 0 1px #4a5870 !important;
+}
+
+.login-page .login-lang-btn.active-lang {
+  color: var(--amber) !important;
+  box-shadow: inset 0 0 0 1px var(--amber) !important;
+}
+
+.login-page .login-lang-btn:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+.login-flag {
+  display: inline-block;
+  width: 20px;
+  height: 14px;
+  margin-right: 8px;
+  border-radius: 3px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18);
+  vertical-align: middle;
+}
+
+.login-flag-uz {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 15'%3E%3Crect width='30' height='15' fill='%23fff'/%3E%3Crect width='30' height='4.6' fill='%231eb4e8'/%3E%3Crect y='10.4' width='30' height='4.6' fill='%231eb53a'/%3E%3Crect y='4.6' width='30' height='.5' fill='%23ce1126'/%3E%3Crect y='9.9' width='30' height='.5' fill='%23ce1126'/%3E%3Ccircle cx='4.5' cy='2.3' r='1.5' fill='%23fff'/%3E%3Ccircle cx='5.1' cy='2.3' r='1.3' fill='%231eb4e8'/%3E%3Ccircle cx='8' cy='1.6' r='.3' fill='%23fff'/%3E%3Ccircle cx='9.4' cy='2.6' r='.3' fill='%23fff'/%3E%3Ccircle cx='8' cy='3.4' r='.3' fill='%23fff'/%3E%3C/svg%3E");
+}
+
+.login-flag-ru {
+  background-image: linear-gradient(#ffffff 0 33.4%, #0039a6 33.4% 66.7%, #d52b1e 66.7% 100%);
+}
+
+.login-flag-en {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30'%3E%3CclipPath id='t'%3E%3Cpath d='M30 15h30v15zv15h-30zh-30V0zV0h30z'/%3E%3C/clipPath%3E%3Cpath d='M0 0v30h60V0z' fill='%23012169'/%3E%3Cpath d='M0 0l60 30m0-30L0 30' stroke='%23fff' stroke-width='6'/%3E%3Cpath d='M0 0l60 30m0-30L0 30' clip-path='url(%23t)' stroke='%23C8102E' stroke-width='4'/%3E%3Cpath d='M30 0v30M0 15h60' stroke='%23fff' stroke-width='10'/%3E%3Cpath d='M30 0v30M0 15h60' stroke='%23C8102E' stroke-width='6'/%3E%3C/svg%3E");
+}
+
+/* ------------------------------------------------------------------ karta */
+
+/* margin: auto — karta yuqori panel va sahifa tubi orasida vertikal markazda turadi.
+   Sig'masa, padding-bottom hisobiga ichkarida skroll bo'ladi (chizig'i ko'rinmaydi). */
+.login-card {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  width: min(440px, calc(100% - 32px));
+  margin: 15px auto auto;   /* tepa 15px, yon tomonlar auto, past auto */
+  padding: 40px 40px 34px;
+  background: var(--card);
+  border: 1px solid var(--card-line);
+  border-radius: 16px;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.7);
+}
+
+/* Karta ostidan/ustidan minimal bo'sh joy */
+.login-page::after {
+  content: "";
+  flex: 0 0 auto;
+  height: 32px;
+}
+
+/* Sarlavha qismi — markazda */
+.login-header {
+  min-height: 118px;
+  margin-bottom: 26px;
+  text-align: center;
+}
+
+.login-eyebrow {
+  display: block;
+  text-align: center;
+  font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.login-page h1.login-title {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+}
+
+.login-page .login-subtitle {
+  margin: 8px auto 0;
+  max-width: 340px;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ------------------------------------------------------------------ Vaadin maydonlari */
+
+.login-field {
+  width: 100%;
+  padding: 0;
+  --lumo-body-text-color: var(--text);
+  --lumo-secondary-text-color: var(--icon);
+  --lumo-header-text-color: var(--text);
+  --lumo-primary-color: var(--amber);
+  --lumo-primary-text-color: var(--amber);
+  --lumo-error-text-color: var(--danger-ink);
+}
+
+.login-field::part(label) {
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--label);
+}
+
+.login-field::part(input-field) {
+  height: 48px;
+  padding: 0 14px;
+  border-radius: 10px;
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--input-line);
+  transition: box-shadow 0.12s ease;
+}
+
+.login-field:hover::part(input-field) {
+  box-shadow: inset 0 0 0 1px #4a5870;
+}
+
+.login-field[focused]::part(input-field),
+.login-field[focus-ring]::part(input-field) {
+  box-shadow: inset 0 0 0 1px var(--amber), 0 0 0 3px rgba(240, 176, 74, 0.2);
+}
+
+.login-field input {
+  color: var(--text);
+  font-size: 16px; /* iOS'da fokusda zoom bo'lmasligi uchun 16px dan kichik qilmang */
+}
+
+.login-field input::placeholder {
+  color: #8794a8;
+  opacity: 1;
+}
+
+/* Avto-to'ldirilgan maydon (Chrome / Edge / Safari): matn va fon doim tungi mavzuda qoladi.
+   Oldin matn qora bo'lib, qora fonda ko'rinmay qolardi. !important kerak: brauzer va Vaadin (Lumo)
+   o'zining autofill qoidalarini yozadi, ularni oddiy qoida bosib o'ta olmaydi. */
+.login-field input {
+  color-scheme: dark;
+}
+
+.login-field input:-webkit-autofill,
+.login-field input:-webkit-autofill:hover,
+.login-field input:-webkit-autofill:focus,
+.login-field input:-webkit-autofill:active,
+.login-field input:autofill {
+  -webkit-text-fill-color: #e8edf4 !important;
+  color: #e8edf4 !important;
+  caret-color: #e8edf4 !important;
+  -webkit-box-shadow: 0 0 0 1000px #0e131a inset !important;
+  box-shadow: 0 0 0 1000px #0e131a inset !important;
+  /* brauzerning sariq/oq fonini amalda ko'rsatmaslik uchun */
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+/* Firefox */
+.login-field input:-moz-autofill {
+  background-color: #0e131a !important;
+  color: #e8edf4 !important;
+}
+
+/* Parolni ko'rsatish tugmasi */
+.login-field::part(reveal-button) {
+  color: var(--icon);
+}
+
+.login-field::part(reveal-button):hover {
+  color: var(--text-strong);
+}
+
+/* Maydon oldidagi rangsiz ikonlar */
+.login-form .login-input-icon {
+  width: 18px;
+  height: 18px;
+  margin: 0 6px 0 0;
+  padding: 0;
+  color: var(--icon);
+  --vaadin-icon-size: 18px;
+  --lumo-icon-size: 18px;
+}
+
+.login-field[focused] .login-input-icon {
+  color: #b4bfce;
+}
+
+/* ------------------------------------------------------------------ pastki qator */
+
+.login-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 24px;
+  margin-top: 2px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.login-remember {
+  color: var(--label);
+  --lumo-body-text-color: var(--label);
+  --lumo-primary-color: var(--amber);
+  --lumo-primary-contrast-color: var(--amber-ink);
+}
+
+.login-remember::part(checkbox) {
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1px #3a475b;
+}
+
+.login-remember[checked]::part(checkbox) {
+  background: var(--amber);
+  box-shadow: none;
+}
+
+.login-forgot,
+.login-register-link {
+  color: var(--amber);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-forgot:hover,
+.login-register-link:hover {
+  color: var(--amber-soft);
+}
+
+.login-forgot:focus-visible,
+.login-register-link:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.login-error {
+  padding: 11px 14px;
+  border-left: 3px solid var(--danger-line);
+  border-radius: 8px;
+  background: var(--danger-bg);
+  color: var(--danger-ink);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* ------------------------------------------------------------------ Kirish tugmasi */
+
+.login-form .login-submit {
+  --vaadin-button-background: var(--amber);
+  --vaadin-button-text-color: var(--amber-ink);
+  --vaadin-button-border-color: transparent;
+  --lumo-primary-color: var(--amber);
+  --lumo-primary-color-50pct: rgba(240, 176, 74, 0.5);
+  --lumo-primary-contrast-color: var(--amber-ink);
+
+  width: 100% !important;
+  height: 52px !important;
+  margin: 8px 0 0 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  background: var(--amber) !important;
+  background-color: var(--amber) !important;
+  background-image: none !important;
+  color: var(--amber-ink) !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+  cursor: pointer;
+  opacity: 1 !important;
+  transition: background 0.12s ease;
+}
+
+.login-form .login-submit::part(label) {
+  color: var(--amber-ink) !important;
+}
+
+.login-form .login-submit:hover {
+  background: var(--amber-soft) !important;
+  background-color: var(--amber-soft) !important;
+}
+
+.login-form .login-submit:active {
+  background: #d99a35 !important;
+  background-color: #d99a35 !important;
+}
+
+.login-form .login-submit[disabled] {
+  background: #8a6c33 !important;
+  background-color: #8a6c33 !important;
+  color: var(--amber-ink) !important;
+  cursor: default;
+}
+
+.login-form .login-submit:focus-visible {
+  outline: 3px solid rgba(240, 176, 74, 0.55);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------ ro'yxatdan o'tish */
+
+.login-register-prompt {
+  margin-top: 22px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.login-register-prompt .login-register-link {
+  margin-left: 4px;
+}
+
+/* ------------------------------------------------------------------ moslashuvchanlik */
+
+/* Planshet */
+@media (max-width: 900px) {
+  .login-topbar {
+    padding: 32px 32px 24px;
+  }
+}
+
+/* Telefon */
+@media (max-width: 560px) {
+  .login-topbar {
+     padding: 20px 16px 8px;   /* karta margin: 20px auto bilan birga ishlaydi */
+   }
+  .login-langs {
+    justify-content: center;
+  }
+  .login-page .login-lang-btn {
+    height: 32px !important;
+    padding: 0 10px !important;
+    font-size: 12px !important;
+  }
+  .login-flag {
+    width: 18px;
+    height: 12px;
+    margin-right: 6px;
+  }
+  .login-card {
+    width: calc(100% - 24px);
+    margin: 20px auto;
+    padding: 28px 20px 26px;
+    border-radius: 14px;
+  }
+  .login-header {
+    min-height: 104px;
+    margin-bottom: 20px;
+  }
+  .login-page h1.login-title {
+    font-size: 26px;
+  }
+  .login-page .login-subtitle {
+    font-size: 14px;
+  }
+  .login-options {
+    white-space: normal;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 10px;
+  }
+  .login-ring-a { width: 480px; height: 480px; left: -240px; bottom: -300px; }
+  .login-ring-b { width: 320px; height: 320px; left: -160px; bottom: -200px; }
+  .login-ring-c { width: 480px; height: 480px; right: -260px; top: -300px; }
+  .login-ring-d { width: 320px; height: 320px; right: -170px; top: -200px; }
+}
+
+/* Juda tor ekranlar */
+@media (max-width: 360px) {
+  .login-card {
+    padding: 24px 16px 22px;
+  }
+  .login-page h1.login-title {
+    font-size: 23px;
+  }
+  .login-logo-text {
+    font-size: 17px;
+  }
+}
+
+/* Past balandlikdagi ekranlar (landscape telefon) */
+@media (max-height: 640px) {
+.login-topbar {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  .login-header {
+    min-height: 0;
+    margin-bottom: 18px;
+  }
+  .login-card {
+    margin: 16px auto;
+  }
+}

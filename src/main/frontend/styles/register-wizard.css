@@ -1,0 +1,408 @@
+/* ==========================================================================
+   Uz-mark ERP — ro'yxatdan o'tish wizard'i (3 qadam)
+   Joylashuvi: frontend/styles/register-wizard.css
+   O'zgaruvchilar va dropdown stillari app-shell.css'dan olinadi.
+   ========================================================================== */
+
+.wz-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: clip;
+  background: var(--bg);
+}
+
+/* Vaadin maydonlarini tungi mavzuga moslash */
+.wz-page vaadin-text-field,
+.wz-page vaadin-email-field,
+.wz-page vaadin-password-field,
+.wz-page vaadin-checkbox {
+  --lumo-base-color: var(--card);
+  --lumo-body-text-color: var(--text);
+  --lumo-secondary-text-color: var(--label);
+  --lumo-tertiary-text-color: var(--icon);
+  --lumo-contrast-10pct: var(--input-line);
+  --lumo-contrast-20pct: #3a475c;
+  --lumo-primary-color: var(--amber);
+  --lumo-primary-text-color: var(--amber);
+  --lumo-primary-color-50pct: var(--amber-line);
+  --lumo-error-color: var(--bad);
+  --lumo-error-text-color: var(--bad);
+  --lumo-border-radius-m: 10px;
+}
+
+.wz-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 18px 40px;
+}
+
+.wz-home { text-decoration: none; }
+
+.wz-top-right { display: flex; align-items: center; gap: 18px; }
+
+.wz-signin { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.wz-signin-q { color: var(--muted); }
+.wz-signin-link { color: var(--amber); font-weight: 700; text-decoration: none; }
+.wz-signin-link:hover { color: var(--amber-soft); }
+
+.wz-main { display: flex; justify-content: center; padding: 12px 20px 64px; }
+
+.wz-card {
+  width: 100%;
+  max-width: 640px;
+  padding: 36px 40px 40px;
+  background: var(--card);
+  border: 1px solid var(--card-line);
+  border-radius: 18px;
+  box-shadow: 0 40px 80px -48px rgba(0, 0, 0, 0.8);
+}
+
+.wz-card.is-wide { max-width: 920px; }
+
+/* ------------------------------------------------------------------ qadamlar paneli */
+
+.wz-steps { display: flex; align-items: center; margin-bottom: 32px; }
+
+.wz-step { display: flex; align-items: center; gap: 10px; flex: none; }
+
+.wz-step-dot {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--input-line);
+  color: var(--icon);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.wz-step-label { font-size: 14px; font-weight: 600; color: var(--icon); }
+
+.wz-step.is-current .wz-step-dot { box-shadow: inset 0 0 0 1px var(--amber); color: var(--amber); }
+.wz-step.is-current .wz-step-label { color: var(--text-strong); }
+
+.wz-step.is-done .wz-step-dot {
+  position: relative;
+  background: var(--amber);
+  box-shadow: none;
+}
+
+.wz-step.is-done .wz-step-dot::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 11px;
+  width: 6px;
+  height: 11px;
+  border-right: 2px solid var(--amber-ink);
+  border-bottom: 2px solid var(--amber-ink);
+  transform: rotate(45deg);
+}
+
+.wz-step.is-done .wz-step-label { color: var(--label); }
+
+.wz-step-line { flex: 1; height: 2px; margin: 0 14px; border-radius: 1px; background: var(--input-line); }
+.wz-step-line.is-done { background: var(--amber); }
+
+/* ------------------------------------------------------------------ matn va maydonlar */
+
+.wz-title {
+  font-size: clamp(24px, 3vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+}
+
+.wz-sub { margin-top: 8px; font-size: 15.5px; line-height: 1.55; color: var(--muted); }
+
+.wz-section { margin-top: 28px; }
+
+.wz-section-title {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--icon);
+}
+
+.wz-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 16px; }
+.wz-span-2 { grid-column: span 2; }
+
+.wz-terms { margin-top: 22px; }
+
+.wz-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 20px; margin-top: 30px; }
+
+.wz-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 26px;
+  border: none;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.12s ease, opacity 0.12s ease;
+}
+
+.wz-btn .home-svg { width: 18px; height: 18px; }
+
+.wz-btn-primary { background: var(--amber); color: var(--amber-ink); }
+.wz-btn-primary:hover:not([disabled]) { background: var(--amber-soft); }
+.wz-btn-primary:active:not([disabled]) { background: #d99a35; }
+.wz-btn[disabled] { opacity: 0.4; cursor: not-allowed; }
+.wz-btn:focus-visible,
+.wz-link:focus-visible,
+.wz-mod:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+
+.wz-link {
+  padding: 4px 0;
+  border: none;
+  background: transparent;
+  color: var(--amber);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.wz-link:hover { color: var(--amber-soft); }
+
+/* ------------------------------------------------------------------ 2-qadam: kod */
+
+.wz-code-wrap { max-width: 280px; margin-top: 26px; }
+
+.wz-code::part(input-field) { height: 56px; }
+
+.wz-code input {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------ 3-qadam: modullar */
+
+.wz-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.wz-toolbar-left { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.wz-counter { font-size: 14px; font-weight: 700; color: var(--label); }
+
+.wz-verified {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(95, 209, 160, 0.12);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--good);
+}
+
+.wz-modules {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.wz-mod {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px;
+  background: var(--bg);
+  border-radius: 14px;
+  box-shadow: inset 0 0 0 1px var(--input-line);
+  cursor: pointer;
+  user-select: none;
+  transition: box-shadow 0.12s ease, background 0.12s ease;
+}
+
+.wz-mod:hover { box-shadow: inset 0 0 0 1px #4a5870; }
+
+.wz-mod.is-selected {
+  background: linear-gradient(160deg, rgba(240, 176, 74, 0.1), rgba(240, 176, 74, 0.02));
+  box-shadow: inset 0 0 0 2px var(--amber);
+}
+
+.wz-mod-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+
+.wz-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 11px;
+  background: var(--amber-tint);
+  box-shadow: inset 0 0 0 1px var(--amber-line);
+  color: var(--amber);
+}
+
+.wz-icon .home-svg { width: 22px; height: 22px; }
+
+.wz-mod-check {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  box-shadow: inset 0 0 0 1.5px var(--input-line);
+}
+
+.wz-mod.is-selected .wz-mod-check { background: var(--amber); box-shadow: none; }
+
+.wz-mod.is-selected .wz-mod-check::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  width: 6px;
+  height: 11px;
+  border-right: 2.5px solid var(--amber-ink);
+  border-bottom: 2.5px solid var(--amber-ink);
+  transform: rotate(45deg);
+}
+
+.wz-mod h3 { font-size: 17px; font-weight: 700; color: var(--text-strong); }
+.wz-mod p { font-size: 14px; line-height: 1.5; color: var(--muted); }
+.wz-mod-feats { margin-top: 4px; font-size: 12.5px; line-height: 1.5; color: var(--icon); }
+
+.wz-err { display: block; margin-top: 14px; font-size: 14px; font-weight: 600; color: var(--bad); }
+
+/* ------------------------------------------------------------------ moslashuvchanlik */
+
+@media (max-width: 720px) {
+  .wz-top { padding: 14px 16px; }
+  .wz-signin-q { display: none; }
+  .wz-main { padding: 8px 12px 48px; }
+  .wz-card { padding: 24px 18px 28px; border-radius: 14px; }
+  .wz-grid { grid-template-columns: minmax(0, 1fr); }
+  .wz-span-2 { grid-column: auto; }
+  .wz-step-label { display: none; }
+  .wz-step.is-current .wz-step-label { display: inline; }
+  .wz-step-line { margin: 0 8px; }
+  .wz-modules { grid-template-columns: minmax(0, 1fr); }
+  .wz-actions .wz-btn { width: 100%; }
+}
+
+/* Avto-to'ldirilgan maydonlarda matn qora bo'lib qolmasligi uchun (login.css bilan bir xil) */
+.wz-page vaadin-text-field input,
+.wz-page vaadin-email-field input,
+.wz-page vaadin-password-field input {
+  color-scheme: dark;
+}
+
+.wz-page vaadin-text-field input:-webkit-autofill,
+.wz-page vaadin-email-field input:-webkit-autofill,
+.wz-page vaadin-password-field input:-webkit-autofill,
+.wz-page vaadin-text-field input:-webkit-autofill:hover,
+.wz-page vaadin-email-field input:-webkit-autofill:hover,
+.wz-page vaadin-password-field input:-webkit-autofill:hover,
+.wz-page vaadin-text-field input:-webkit-autofill:focus,
+.wz-page vaadin-email-field input:-webkit-autofill:focus,
+.wz-page vaadin-password-field input:-webkit-autofill:focus,
+.wz-page vaadin-text-field input:autofill,
+.wz-page vaadin-email-field input:autofill,
+.wz-page vaadin-password-field input:autofill {
+  -webkit-text-fill-color: #e8edf4 !important;
+  color: #e8edf4 !important;
+  caret-color: #e8edf4 !important;
+  -webkit-box-shadow: 0 0 0 1000px #151b24 inset !important;
+  box-shadow: 0 0 0 1000px #151b24 inset !important;
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+/* "Foydalanish shartlari..." belgilash katagi matni: qora fonda ko'rinadigan rang */
+.wz-terms,
+.wz-terms vaadin-checkbox,
+.wz-terms .login-remember {
+  color: var(--label);
+  --lumo-body-text-color: var(--label);
+  --lumo-secondary-text-color: var(--label);
+  --vaadin-text-color: var(--label);
+  --vaadin-checkbox-label-color: var(--label);
+  --lumo-primary-color: var(--amber);
+  --lumo-primary-contrast-color: var(--amber-ink);
+  --lumo-error-text-color: var(--bad);
+  --lumo-error-color: var(--bad);
+}
+
+.wz-terms vaadin-checkbox label,
+.wz-terms vaadin-checkbox [slot="label"],
+.wz-terms vaadin-checkbox::part(label) {
+  color: var(--label) !important;
+  -webkit-text-fill-color: var(--label) !important;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.wz-terms vaadin-checkbox [slot="error-message"] {
+  color: var(--bad) !important;
+}
+
+.wz-terms vaadin-checkbox::part(checkbox) {
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1px #3a475b;
+}
+
+.wz-terms vaadin-checkbox[checked]::part(checkbox) {
+  background: var(--amber);
+  box-shadow: none;
+}
+
+/* Yordamchi matn ("Kamida 8 ta belgi") va xato xabarlari qora fonda ko'rinadigan rangda */
+.wz-page vaadin-text-field [slot="helper"],
+.wz-page vaadin-email-field [slot="helper"],
+.wz-page vaadin-password-field [slot="helper"],
+.wz-page vaadin-text-field::part(helper-text),
+.wz-page vaadin-email-field::part(helper-text),
+.wz-page vaadin-password-field::part(helper-text) {
+  color: var(--muted) !important;
+  -webkit-text-fill-color: var(--muted) !important;
+  font-size: 12.5px;
+}
+
+.wz-page vaadin-text-field [slot="error-message"],
+.wz-page vaadin-email-field [slot="error-message"],
+.wz-page vaadin-password-field [slot="error-message"],
+.wz-page vaadin-text-field::part(error-message),
+.wz-page vaadin-email-field::part(error-message),
+.wz-page vaadin-password-field::part(error-message) {
+  color: var(--bad) !important;
+  -webkit-text-fill-color: var(--bad) !important;
+  font-size: 12.5px;
+}
+
+.wz-page vaadin-text-field,
+.wz-page vaadin-email-field,
+.wz-page vaadin-password-field {
+  --vaadin-text-color: var(--text);
+  --vaadin-input-field-helper-color: var(--muted);
+  --lumo-secondary-text-color: var(--muted);
+}
+
+/* 2-qadam: "Kod kelmadimi?" izohi */
+.wz-hint {
+  margin-top: 14px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--icon);
+}

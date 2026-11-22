@@ -1,0 +1,279 @@
+/* POS sozlamalari sahifasi. Joylashuvi: frontend/styles/pos-settings.css */
+
+.ps-page {
+  --ps-bg: #0f141c;
+  --ps-card: #151b25;
+  --ps-card-2: #1a2230;
+  --ps-border: #243042;
+  --ps-text: #e6edf3;
+  --ps-muted: #8b98a9;
+  --ps-accent: #22c55e;
+  --ps-accent-strong: #16a34a;
+  --ps-bad: #f87171;
+
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 780px;
+  padding: 28px 24px 40px;
+  color: var(--ps-text);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ------------------------------------------------ sarlavha */
+.ps-header { margin-bottom: 4px; }
+.ps-title {
+  margin: 0;
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ps-text);
+}
+.ps-sub {
+  margin: 6px 0 0;
+  font-size: 0.95rem;
+  color: var(--ps-muted);
+}
+
+/* ------------------------------------------------ karta */
+.ps-card {
+  background: var(--ps-card);
+  border: 1px solid var(--ps-border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+.ps-card-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  background: linear-gradient(180deg, var(--ps-card-2), var(--ps-card));
+  border-bottom: 1px solid var(--ps-border);
+}
+.ps-card-icon {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  font-size: 1.25rem;
+  border-radius: 12px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+.ps-card-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ps-card-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ps-text);
+}
+.ps-card-desc {
+  font-size: 0.85rem;
+  color: var(--ps-muted);
+}
+.ps-card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ------------------------------------------------ switch */
+.ps-switch {
+  flex: none;
+  position: relative;
+  width: 48px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--ps-border);
+  border-radius: 999px;
+  background: #2a3546;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.ps-switch-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  transition: transform 0.2s, background 0.2s;
+}
+.ps-switch.is-on {
+  background: var(--ps-accent-strong);
+  border-color: var(--ps-accent);
+}
+.ps-switch.is-on .ps-switch-knob {
+  transform: translateX(20px);
+  background: #fff;
+}
+.ps-switch:focus-visible {
+  outline: 2px solid var(--ps-accent);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------ maydonlar */
+.ps-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.ps-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.ps-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ps-text);
+}
+.ps-helper {
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--ps-muted);
+}
+
+.ps-badge {
+  align-self: flex-start;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: 999px;
+  color: var(--ps-accent);
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+/* Vaadin maydonlarini qorong'i mavzuga moslash */
+.ps-page vaadin-number-field,
+.ps-page vaadin-text-field {
+  --lumo-base-color: var(--ps-bg);
+  --lumo-body-text-color: var(--ps-text);
+  --lumo-secondary-text-color: var(--ps-muted);
+  --lumo-tertiary-text-color: var(--ps-muted);
+  --lumo-contrast-10pct: #1b2330;
+  --lumo-contrast-20pct: #2a3546;
+  --lumo-contrast-60pct: var(--ps-muted);
+  --lumo-primary-color: var(--ps-accent);
+  --lumo-primary-text-color: var(--ps-accent);
+  --lumo-border-radius-m: 10px;
+  padding: 0;
+}
+.ps-page vaadin-number-field::part(input-field),
+.ps-page vaadin-text-field::part(input-field) {
+  background: var(--ps-bg);
+  border: 1px solid var(--ps-border);
+  border-radius: 10px;
+  box-shadow: none;
+}
+.ps-page vaadin-number-field[focused]::part(input-field),
+.ps-page vaadin-text-field[focused]::part(input-field) {
+  border-color: var(--ps-accent);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18);
+}
+.ps-page vaadin-number-field input,
+.ps-page vaadin-text-field input {
+  color: var(--ps-text);
+}
+.ps-page vaadin-number-field input::placeholder,
+.ps-page vaadin-text-field input::placeholder {
+  color: #5b687a;
+  opacity: 1;
+}
+.ps-page vaadin-number-field::part(increase-button),
+.ps-page vaadin-number-field::part(decrease-button) {
+  color: var(--ps-muted);
+}
+
+/* ------------------------------------------------ tugmalar va holat */
+.ps-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.ps-btn {
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.05s;
+}
+.ps-btn:active { transform: translateY(1px); }
+.ps-btn-ghost {
+  color: var(--ps-text);
+  background: transparent;
+  border: 1px solid var(--ps-border);
+}
+.ps-btn-ghost:hover {
+  background: var(--ps-card-2);
+  border-color: #33425a;
+}
+.ps-btn-primary {
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--ps-accent-strong);
+  border: 1px solid var(--ps-accent);
+  box-shadow: 0 6px 16px rgba(22, 163, 74, 0.35);
+}
+.ps-btn-primary:hover { background: #15803d; }
+
+.ps-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  border-radius: 999px;
+  color: var(--ps-muted);
+  background: var(--ps-bg);
+  border: 1px solid var(--ps-border);
+}
+.ps-status::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #5b687a;
+}
+.ps-status.is-ok {
+  color: var(--ps-accent);
+  border-color: rgba(34, 197, 94, 0.35);
+  background: rgba(34, 197, 94, 0.08);
+}
+.ps-status.is-ok::before { background: var(--ps-accent); }
+.ps-status.is-bad {
+  color: var(--ps-bad);
+  border-color: rgba(248, 113, 113, 0.35);
+  background: rgba(248, 113, 113, 0.08);
+}
+.ps-status.is-bad::before { background: var(--ps-bad); }
+
+.ps-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+
+/* ------------------------------------------------ telefon */
+@media (max-width: 640px) {
+  .ps-page { padding: 18px 14px 32px; }
+  .ps-grid { grid-template-columns: 1fr; }
+  .ps-footer .ps-btn { width: 100%; }
+}

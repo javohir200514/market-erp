@@ -1,0 +1,7 @@
+package com.universal.erp.platform.organization;
+
+public class OrganizationNotFoundException extends RuntimeException {
+    public OrganizationNotFoundException(String message) {
+        super(message);
+    }
+}

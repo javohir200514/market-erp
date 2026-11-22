@@ -1,0 +1,355 @@
+/* =====================================================================
+   DOKONIX — umumiy navbar (qora mavzu, TCloud uslubida, mobilga moslashgan)
+   Joylashuvi: frontend/styles/navbar.css
+   Mobilda: tepada logotip + til + bo'limlar lentasi,
+            "Kirish" va "Ro'yxatdan o'tish" ekran pastida qotib turadi (skroll qilganda ham).
+   ===================================================================== */
+
+.site-layout {
+  --nav-bg: rgba(5, 6, 8, 0.78);
+  --nav-card: #0b0e13;
+  --nav-line: rgba(255, 255, 255, 0.08);
+  --nav-line-2: rgba(255, 255, 255, 0.14);
+  --nav-text: #f5f7fa;
+  --nav-muted: #8b919c;
+  --nav-blue: #0a9bff;
+  --nav-teal: #06b6c4;
+  --lumo-font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  background: #050608;
+  color: var(--nav-text);
+  font-family: var(--lumo-font-family);
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+html { scroll-behavior: smooth; }
+
+.site-layout *,
+.site-layout *::before,
+.site-layout *::after { box-sizing: border-box; }
+
+.site-layout button,
+.site-layout input,
+.site-layout a { font-family: inherit; }
+
+/* ----------------------------------------------------------- navbar */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  background: var(--nav-bg);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  backdrop-filter: saturate(160%) blur(14px);
+  border-bottom: 1px solid var(--nav-line);
+}
+
+.site-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  max-width: 1200px;
+  height: 68px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ----------------------------------------------------------- logotip */
+.site-nav-logo {
+  display: inline-flex;
+  align-items: baseline;
+  flex-shrink: 0;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-decoration: none;
+  color: var(--nav-text);
+}
+.brand-name-main { color: #fff; }
+.brand-name-accent {
+  background: linear-gradient(135deg, var(--nav-blue), var(--nav-teal));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ----------------------------------------------------------- bo'lim havolalari */
+.site-nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.site-nav-link {
+  position: relative;
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: var(--nav-muted);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.site-nav-link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ----------------------------------------------------------- tillar */
+.site-nav-langdrop { position: relative; flex-shrink: 0; }
+
+.site-nav-lang-current {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--nav-muted);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.site-nav-lang-current:hover,
+.site-nav-langdrop.is-open .site-nav-lang-current {
+  color: #fff;
+  border-color: var(--nav-line-2);
+  background: rgba(255, 255, 255, 0.04);
+}
+.site-nav-lang-code { letter-spacing: 0.03em; }
+
+.site-nav-caret {
+  width: 7px; height: 7px;
+  margin-top: -3px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+.site-nav-langdrop.is-open .site-nav-caret { transform: rotate(225deg); margin-top: 3px; }
+
+.site-nav-lang-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 170px;
+  padding: 6px;
+  border: 1px solid var(--nav-line-2);
+  border-radius: 12px;
+  background: var(--nav-card);
+  box-shadow: 0 24px 60px -16px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(10, 155, 255, 0.06);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+  z-index: 10;
+}
+.site-nav-langdrop.is-open .site-nav-lang-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.site-nav-lang-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #c5ccd6;
+  font: inherit;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.site-nav-lang-option:hover { background: rgba(255, 255, 255, 0.06); color: #fff; }
+.site-nav-lang-option.is-active { background: rgba(10, 155, 255, 0.14); color: var(--nav-blue); }
+
+/* bayroqlar (CSS gradientlari) */
+.site-flag {
+  display: inline-block;
+  width: 22px; height: 15px;
+  flex-shrink: 0;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18);
+  background-size: cover;
+}
+.site-flag-uz {
+  background:
+    linear-gradient(#ce1126, #ce1126) 0 5px / 100% 1px no-repeat,
+    linear-gradient(#ce1126, #ce1126) 0 9px / 100% 1px no-repeat,
+    linear-gradient(#0099b5 0 33%, #fff 33% 67%, #1eb53a 67% 100%);
+}
+.site-flag-ru { background: linear-gradient(#fff 0 33%, #0039a6 33% 67%, #d52b1e 67% 100%); }
+.site-flag-en {
+  background:
+    linear-gradient(#c8102e, #c8102e) 50% 0 / 4px 100% no-repeat,
+    linear-gradient(#c8102e, #c8102e) 0 50% / 100% 4px no-repeat,
+    linear-gradient(#fff, #fff) 50% 0 / 8px 100% no-repeat,
+    linear-gradient(#fff, #fff) 0 50% / 100% 8px no-repeat,
+    #012169;
+}
+
+/* ----------------------------------------------------------- kirish / boshlash */
+.site-nav-auth { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+.site-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 18px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.25s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.site-nav-btn-ghost { background: transparent; color: #c5ccd6; }
+.site-nav-btn-ghost:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
+
+.site-nav-btn-primary {
+  background: var(--nav-blue);
+  color: #fff;
+  box-shadow: 0 8px 24px -10px rgba(10, 155, 255, 0.7);
+}
+.site-nav-btn-primary:hover {
+  background: #2aa9ff;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px -10px rgba(10, 155, 255, 0.85);
+}
+
+/* joriy sahifa */
+.site-nav-btn[aria-current="page"].site-nav-btn-ghost {
+  color: #fff;
+  border-color: var(--nav-line-2);
+  background: rgba(255, 255, 255, 0.05);
+}
+.site-nav-btn[aria-current="page"].site-nav-btn-primary {
+  background: linear-gradient(135deg, var(--nav-blue), var(--nav-teal));
+  box-shadow: 0 8px 28px -8px rgba(6, 182, 196, 0.7);
+}
+
+/* klaviatura fokusi */
+.site-nav a:focus-visible,
+.site-nav button:focus-visible {
+  outline: 2px solid var(--nav-blue);
+  outline-offset: 2px;
+}
+
+/* ----------------------------------------------------------- planshet */
+@media (max-width: 1000px) {
+  .site-nav-inner { gap: 12px; padding: 0 20px; }
+  .site-nav-link { padding: 8px 10px; font-size: 14px; }
+  .site-nav-btn { padding: 8px 14px; font-size: 14px; }
+}
+
+/* ----------------------------------------------------------- telefon */
+@media (max-width: 860px) {
+  /*
+   * Muhim: backdrop-filter bo'lgan ota-element ichidagi position:fixed elementlar
+   * ekranga emas, shu otaga nisbatan joylashadi. Pastki panel ekranga yopishib
+   * turishi uchun mobilda navbarning blur effekti o'chirilgan (fon deyarli to'q).
+   */
+  .site-nav {
+    background: rgba(5, 6, 8, 0.96);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .site-nav-inner {
+    flex-wrap: wrap;
+    height: auto;
+    row-gap: 0;
+    column-gap: 8px;
+    padding: 10px 16px;
+  }
+
+  /* 1-qator: logotip chapda, til o'ngda */
+  .site-nav-logo { order: 1; font-size: 22px; }
+  .site-nav-langdrop { order: 2; margin-left: auto; }
+
+  /* Mobilda "Imkoniyatlar / Jarayon / Platforma / Boshlash" havolalari ko'rsatilmaydi */
+  .site-nav-links { display: none; }
+
+  /* ---- Kirish / Ro'yxatdan o'tish: ekran pastida, skroll qilganda ham turadi ---- */
+  .site-nav-auth {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1100;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 10px;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+    background: rgba(5, 6, 8, 0.94);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid var(--nav-line-2);
+    box-shadow: 0 -18px 40px -20px rgba(0, 0, 0, 0.9);
+    transition: transform 0.25s ease;
+  }
+  .site-nav-auth .site-nav-btn {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    font-size: 15px;
+  }
+  .site-nav-auth .site-nav-btn-ghost {
+    color: #fff;
+    border-color: var(--nav-line-2);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  /* pastki panel sahifa oxirini (footer) yopib qo'ymasligi uchun */
+  .site-layout { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+
+  /* Kirish va Ro'yxatdan o'tish sahifalarida (ularda .au-page bor) pastki panel butunlay yo'qoladi */
+  .site-layout:has(.au-page) .site-nav-auth { display: none; }
+  .site-layout:has(.au-page) { padding-bottom: 0; }
+
+  /* "#bo'lim" ga o'tganda sarlavha ikki qatorli navbar tagida qolib ketmasin */
+  .site-layout .home-section { scroll-margin-top: 72px; }
+}
+
+@media (max-width: 480px) {
+  .site-nav-inner { padding: 8px 12px; column-gap: 6px; }
+  .site-nav-logo { font-size: 20px; }
+  .site-nav-lang-code { display: none; }
+  .site-nav-lang-current { padding: 7px 8px; gap: 6px; }
+  .site-nav-lang-menu { min-width: 160px; }
+  .site-nav-auth { padding-left: 12px; padding-right: 12px; gap: 8px; }
+}
+
+@media (max-width: 360px) {
+  .site-nav-logo { font-size: 18px; }
+  .site-nav-auth .site-nav-btn { font-size: 14px; padding: 12px 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .site-nav *, .site-nav *::before, .site-nav *::after { transition: none !important; }
+}
